@@ -108,6 +108,9 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 'bold',
     color: '#ffa040',
   },
+  wordsWrapper: {
+    textAlign: 'center'
+  },
   cardGrid: {
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
@@ -153,7 +156,8 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
   },
   footer: {
-    padding: theme.spacing(4),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
     backgroundColor: '#fff',
     textAlign: 'center',
     color: '#ffa040',
@@ -194,13 +198,19 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
+
 function App() {
 
   const [state, setState] = useState({
     profitPerSec: 0,
     isMakingProfit: false,
-    money: 279000000000
+    money: 279000000000,
+    audios: [new Audio(require('./static/audios/jack1.mp3')),
+    new Audio(require('./static/audios/jack2.mp3')),
+    new Audio(require('./static/audios/jack3.mp3')),
+    new Audio(require('./static/audios/jack4.mp3'))],
   });
+  const [audioIdx, setAudioIdx] = useState(0)
   const classes = useStyles();
   const items = require('./static/goods.json')['items'];
   items.sort((a, b) => a.price - b.price)
@@ -227,6 +237,10 @@ function App() {
     let summary = 0;
     Object.values(itemsNum).forEach(i => summary += parseInt(i));
     return summary;
+  }
+  function onAudioBtnClick() {
+    state.audios[audioIdx].play();
+    setAudioIdx((audioIdx + 1) % state.audios.length)
   }
   function onNumberChange(target) {
     const itemname = target.id;
@@ -329,10 +343,12 @@ function App() {
             <Paper className={classes.topPaper}>
               <Grid container justify="center" alignItems="center">
                 <Avatar alt="jack ma" src={require("./static/images/jack-ma.jpg")} className={classes.bigAvatar} />
-                <Typography variant="h3" className={classes.largewords}>马云模拟器</Typography>
+                <Box className={classes.wordsWrapper}>
+                  <Typography variant="h3" className={classes.largewords}>马云模拟器</Typography>
+                  <Button variant="contained" onClick={onAudioBtnClick} color="secondary">🔊</Button>
+                </Box>
               </Grid>
             </Paper>
-
             <Paper className={classes.yuebaoPaper}>
               <FormControlLabel
                 className={classes.yuebaoLabel}
