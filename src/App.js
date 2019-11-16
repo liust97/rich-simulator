@@ -32,24 +32,47 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import useInterval from './useInterval'
+import { withStyles } from '@material-ui/core/styles';
 const theme = createMuiTheme({
+  shadows: [
+    '0px 0px 0px 0px red,0px 0px 0px 0px red,0px 0px 0px 0px red',
+    '0px 0px 0px 0px red,0px 0px 0px 0px red,0px 0px 0px 0px red',
+    '0px 0px 0px 0px red,0px 0px 0px 0px red,0px 0px 0px 0px red',
+    '0px 0px 0px 0px red,0px 0px 0px 0px red,0px 0px 0px 0px red',
+    '0px 0px 0px 0px red,0px 0px 0px 0px red,0px 0px 0px 0px red',
+    '0px 0px 0px 0px red,0px 0px 0px 0px red,0px 0px 0px 0px red',
+    '0px 0px 0px 0px red,0px 0px 0px 0px red,0px 0px 0px 0px red',
+    '0px 0px 0px 0px red,0px 0px 0px 0px red,0px 0px 0px 0px red',
+  ],
   palette: {
     primary: deepOrange,
     secondary: amber,
-  },
+  }
 });
-let yuebaoInterval = 0;
+
+const MySwitch = withStyles({
+  switchBase: {
+    color: deepOrange[300],
+    '&$checked': {
+      color: deepOrange[500],
+    },
+    '&$checked + $track': {
+      backgroundColor: deepOrange[500],
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
 
 const useStyles = makeStyles(theme => ({
-  app: {
-    backgroundColor: '#eeeeee'
-  },
   container: {
     paddingTop: theme.spacing(12),
     paddingBottom: theme.spacing(4),
   },
   root: {
     flexGrow: 1,
+    boxShadow: 'none',
+    backgroundColor: '#eeeeee'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -58,15 +81,20 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     textAlign: 'center'
   },
+  topLogo: {
+    width: 78
+  },
   topPaper: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
   yuebaoPaper: {
     fontSize: '80%',
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-    padding: theme.spacing(2)
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   },
   yuebaoLabel: {
     color: '#ffa040'
@@ -79,7 +107,6 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(2),
     fontWeight: 'bold',
     color: '#ffa040',
-    letterSpacing: 10
   },
   cardGrid: {
     paddingTop: theme.spacing(2),
@@ -109,7 +136,8 @@ const useStyles = makeStyles(theme => ({
     color: '#FF5000'
   },
   addButton: {
-    width: 90
+    width: 90,
+    minWidth: 90
   },
   shopList: {
     width: '100%',
@@ -123,6 +151,19 @@ const useStyles = makeStyles(theme => ({
   emptyLabel: {
     color: 'grey',
     textAlign: 'center',
+  },
+  footer: {
+    padding: theme.spacing(4),
+    backgroundColor: '#fff',
+    textAlign: 'center',
+    color: '#ffa040',
+  },
+  footerText: {
+    fontSize: '80%',
+    letterSpacing: '0.2em',
+    'a:visited': {
+      color: 'pink'
+    }
   }
 }));
 function TabPanel(props) {
@@ -191,6 +232,8 @@ function App() {
     const itemname = target.id;
     if (!target.value) {
       target.value = 0;
+    } else if (target.value[0] == 0) {
+      target.value = target.value.substr(1)
     }
     const itemnumber = target.value;
     if (itemnumber == 0) {
@@ -269,12 +312,12 @@ function App() {
     setValue(newValue);
   };
   return (
-    <div className={classes.app}>
+    <div className={classes.root} >
       <ThemeProvider theme={theme}>
         <header>
-          <AppBar position="fixed">
+          <AppBar position="fixed" >
             <Toolbar>
-              <Avatar alt="jack ma" variant="square" src={require("./static/images/jack-ma-cartoon.png")} className={classes.topAvatar} />
+              <img alt="lemon" variant="square" src={require("./static/images/柠檬精.png")} className={classes.topLogo} />
               <Typography variant="h6" className={classes.balance}>
                 余额：{numberWithCommas(balance)} 元
               </Typography>
@@ -283,10 +326,10 @@ function App() {
         </header>
         <main>
           <Container className={classes.container} maxWidth="md">
-            <Paper square className={classes.topPaper}>
+            <Paper className={classes.topPaper}>
               <Grid container justify="center" alignItems="center">
                 <Avatar alt="jack ma" src={require("./static/images/jack-ma.jpg")} className={classes.bigAvatar} />
-                <Typography variant="h4" className={classes.largewords}>花光马云的钱</Typography>
+                <Typography variant="h3" className={classes.largewords}>马云模拟器</Typography>
               </Grid>
             </Paper>
 
@@ -294,11 +337,10 @@ function App() {
               <FormControlLabel
                 className={classes.yuebaoLabel}
                 control={
-                  <Switch
+                  <MySwitch
                     checked={state.isMakingProfit}
                     onChange={handleYuebao}
                     value="checkedB"
-                    color="primary"
                   />
                 }
                 label="把钱存入余额宝"
@@ -315,7 +357,7 @@ function App() {
               </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-              <Grid className={classes.cardGrid} container spacing={2}>
+              <Grid className={classes.cardGrid} container spacing={3}>
                 {
                   items.map(item => (
                     <Grid item key={item.name} xs={12} sm={6} md={4}>
@@ -369,7 +411,7 @@ function App() {
                 <List className={classes.shopList}>
 
                   <ListSubheader component="div" id="nested-list-subheader">
-                    我的购物清单 - 花光马云的钱
+                    我的购物清单 - 马云模拟器(lemonjing.com)
                   </ListSubheader>
                   {
                     getSum() === 0 ? <Typography className={classes.emptyLabel}>你的购物车空空如也</Typography> : null
@@ -390,6 +432,14 @@ function App() {
             </TabPanel>
           </Container>
         </main>
+        <footer className={classes.footer}>
+          <Container maxWidth='md'>
+            <Typography className={classes.footerText}>🍋🍋🍋🍋Lemonjing 柠檬精网🍋🍋🍋🍋</Typography>
+            <Typography className={classes.footerText}>本网站仅供娱乐，信息仅供参考</Typography>
+            <Typography className={classes.footerText}>Inspired by <a href="https://neal.fun/spend/">Spend Bill Gates' Money</a></Typography>
+            <Typography className={classes.footerText}>由<a href="https://liust.me">@LiuST</a>自豪地制作</Typography>
+          </Container>
+        </footer>
       </ThemeProvider>
     </div>
   );
