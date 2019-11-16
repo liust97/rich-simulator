@@ -453,7 +453,11 @@ function App() {
             <Typography className={classes.footerText}>🍋🍋🍋🍋Lemonjing 柠檬精网🍋🍋🍋🍋</Typography>
             <Typography className={classes.footerText}>本网站仅供娱乐，信息仅供参考</Typography>
             <Typography className={classes.footerText}>Inspired by <a href="https://neal.fun/spend/">Spend Bill Gates' Money</a></Typography>
-            <Typography className={classes.footerText}>由<a href="https://liust.me">@LiuST</a>自豪地制作</Typography>
+            <Typography className={classes.footerText}>
+              由<a href="https://liust.me">@LiuST</a>自豪地制作 &nbsp;
+              <a href="https://github.com/liust97/spend-money/issues">反馈</a> &nbsp;
+              <a href="mailto:liust97@qq.com">邮箱联系</a>
+              </Typography>
           </Container>
         </footer>
       </ThemeProvider>
