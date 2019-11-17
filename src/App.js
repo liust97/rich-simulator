@@ -82,7 +82,6 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   topLogo: {
-    width: 78
   },
   topPaper: {
     paddingTop: theme.spacing(4),
@@ -331,137 +330,138 @@ function App() {
         <header>
           <AppBar position="fixed" >
             <Toolbar>
-              <img alt="lemon" variant="square" src={require("./static/images/柠檬精.png")} className={classes.topLogo} />
+              <Avatar alt="lemon" variant="square" src={require("./static/images/lemon.png")} className={classes.topLogo} />
               <Typography variant="h6" className={classes.balance}>
                 余额：{numberWithCommas(balance)} 元
               </Typography>
+              <Button color="inherit" {...a11yProps(1)} onClick={() => setValue(1) }>购物车</Button>
             </Toolbar>
           </AppBar>
         </header>
-        <main>
-          <Container className={classes.container} maxWidth="md">
-            <Paper className={classes.topPaper}>
-              <Grid container justify="center" alignItems="center">
-                <Avatar alt="jack ma" src={require("./static/images/jack-ma.jpg")} className={classes.bigAvatar} />
-                <Box className={classes.wordsWrapper}>
-                  <Typography variant="h3" className={classes.largewords}>马云模拟器</Typography>
-                  <Button variant="contained" onClick={onAudioBtnClick} color="secondary">🔊</Button>
-                </Box>
-              </Grid>
-            </Paper>
-            <Paper className={classes.yuebaoPaper}>
-              <FormControlLabel
-                className={classes.yuebaoLabel}
-                control={
-                  <MySwitch
-                    checked={state.isMakingProfit}
-                    onChange={handleYuebao}
-                    value="checkedB"
-                  />
-                }
-                label="把钱存入余额宝"
-              />
+      <main>
+        <Container className={classes.container} maxWidth="md">
+          <Paper className={classes.topPaper}>
+            <Grid container justify="center" alignItems="center">
+              <Avatar alt="jack ma" src={require("./static/images/jack-ma.jpg")} className={classes.bigAvatar} />
+              <Box className={classes.wordsWrapper}>
+                <Typography variant="h3" className={classes.largewords}>马云模拟器</Typography>
+                <Button variant="contained" onClick={onAudioBtnClick} color="secondary">🔊</Button>
+              </Box>
+            </Grid>
+          </Paper>
+          <Paper className={classes.yuebaoPaper}>
+            <FormControlLabel
+              className={classes.yuebaoLabel}
+              control={
+                <MySwitch
+                  checked={state.isMakingProfit}
+                  onChange={handleYuebao}
+                  value="checkedB"
+                />
+              }
+              label="把钱存入余额宝"
+            />
 
-              {(state.isMakingProfit ? <span>每秒收益：{state.profitPerSec}元</span> : null)}
+            {(state.isMakingProfit ? <span>每秒收益：{state.profitPerSec}元</span> : null)}
 
-            </Paper>
+          </Paper>
 
-            <AppBar position="static">
-              <Tabs value={value} onChange={handleChange} aria-label="tabs">
-                <Tab label="商城" {...a11yProps(0)} />
-                <Tab label="我的购物车" {...a11yProps(1)} />
-              </Tabs>
-            </AppBar>
-            <TabPanel value={value} index={0}>
-              <Grid className={classes.cardGrid} container spacing={3}>
-                {
-                  items.map(item => (
-                    <Grid item key={item.name} xs={12} sm={6} md={4}>
-                      <Card className={classes.card}>
-                        <CardMedia
-                          className={classes.cardMedia}
-                          image={require(`./static/images/items/${item.name}.jpg`)}
-                          title={item.name}
+          <AppBar position="static">
+            <Tabs value={value} onChange={handleChange} aria-label="tabs">
+              <Tab label="商城" {...a11yProps(0)} />
+              <Tab label="我的购物车" {...a11yProps(1)} />
+            </Tabs>
+          </AppBar>
+          <TabPanel value={value} index={0}>
+            <Grid className={classes.cardGrid} container spacing={3}>
+              {
+                items.map(item => (
+                  <Grid item key={item.name} xs={12} sm={6} md={4}>
+                    <Card className={classes.card}>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        image={require(`./static/images/items/${item.name}.jpg`)}
+                        title={item.name}
+                      />
+                      <CardContent className={classes.cardContent}>
+                        <Typography variant="h6" component="h2">
+                          {item.name}
+                        </Typography>
+                        <Typography className={classes.price}>
+                          ￥<b>{item.price}</b>
+                        </Typography>
+                      </CardContent>
+                      <CardActions className={classes.cardActions}>
+                        <TextField
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          id={item.name}
+                          data-itemname={item.name}
+                          label="数量"
+                          type="number"
+                          defaultValue='0'
+                          className={classes.cardInput}
+                          margin="normal"
+                          inputProps={{ min: "0", step: "1" }}
+                          onChange={(e) => onNumberChange(e.target)}
                         />
-                        <CardContent className={classes.cardContent}>
-                          <Typography variant="h6" component="h2">
-                            {item.name}
-                          </Typography>
-                          <Typography className={classes.price}>
-                            ￥<b>{item.price}</b>
-                          </Typography>
-                        </CardContent>
-                        <CardActions className={classes.cardActions}>
-                          <TextField
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                            id={item.name}
-                            data-itemname={item.name}
-                            label="数量"
-                            type="number"
-                            defaultValue='0'
-                            className={classes.cardInput}
-                            margin="normal"
-                            inputProps={{ min: "0", step: "1" }}
-                            onChange={(e) => onNumberChange(e.target)}
-                          />
-                          <Button id={item.name} className={classes.addButton} size="small" variant="contained" color="primary"
-                            onClick={e => {
-                              const target = document.getElementById(item.name);
-                              target.value = parseInt(document.getElementById(item.name).value) + 1;
-                              onNumberChange(target)
-                            }}>
-                            加入购物车
+                        <Button id={item.name} className={classes.addButton} size="small" variant="contained" color="primary"
+                          onClick={e => {
+                            const target = document.getElementById(item.name);
+                            target.value = parseInt(document.getElementById(item.name).value) + 1;
+                            onNumberChange(target)
+                          }}>
+                          加入购物车
                                     </Button>
-                        </CardActions>
-                      </Card>
-                    </Grid>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                ))
+              }
+            </Grid>
+
+          </TabPanel>
+          <TabPanel className={classes.listPanel} value={value} index={1}>
+            <Grid container justify="center">
+              <List className={classes.shopList}>
+
+                <ListSubheader component="div" id="nested-list-subheader">
+                  我的购物清单 - 马云模拟器(lemonjing.com)
+                  </ListSubheader>
+                {
+                  getSum() === 0 ? <Typography className={classes.emptyLabel}>你的购物车空空如也</Typography> : null
+                }
+                {
+                  items.map(item => (!isDisplay[item.name] ? null :
+                    <ListItem key={item.name}>
+                      <ListItemAvatar>
+                        <Avatar src={require(`./static/images/items/${item.name}.jpg`)}>
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary={item.name} secondary={'数量: ' + itemsNum[item.name]} />
+                    </ListItem>
                   ))
                 }
-              </Grid>
-
-            </TabPanel>
-            <TabPanel className={classes.listPanel} value={value} index={1}>
-              <Grid container justify="center">
-                <List className={classes.shopList}>
-
-                  <ListSubheader component="div" id="nested-list-subheader">
-                    我的购物清单 - 马云模拟器(lemonjing.com)
-                  </ListSubheader>
-                  {
-                    getSum() === 0 ? <Typography className={classes.emptyLabel}>你的购物车空空如也</Typography> : null
-                  }
-                  {
-                    items.map(item => (!isDisplay[item.name] ? null :
-                      <ListItem key={item.name}>
-                        <ListItemAvatar>
-                          <Avatar src={require(`./static/images/items/${item.name}.jpg`)}>
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={item.name} secondary={'数量: ' + itemsNum[item.name]} />
-                      </ListItem>
-                    ))
-                  }
-                </List>
-              </Grid>
-            </TabPanel>
-          </Container>
-        </main>
-        <footer className={classes.footer}>
-          <Container maxWidth='md'>
-            <Typography className={classes.footerText}>🍋🍋🍋🍋Lemonjing 柠檬精网🍋🍋🍋🍋</Typography>
-            <Typography className={classes.footerText}>本网站仅供娱乐，信息仅供参考</Typography>
-            <Typography className={classes.footerText}>Inspired by <a href="https://neal.fun/spend/">Spend Bill Gates' Money</a></Typography>
-            <Typography className={classes.footerText}>
-              由<a href="https://liust.me">@LiuST</a>自豪地制作 &nbsp;
+              </List>
+            </Grid>
+          </TabPanel>
+        </Container>
+      </main>
+      <footer className={classes.footer}>
+        <Container maxWidth='md'>
+          <Typography className={classes.footerText}>🍋🍋🍋🍋Lemonjing 柠檬精网🍋🍋🍋🍋</Typography>
+          <Typography className={classes.footerText}>本网站仅供娱乐，信息仅供参考</Typography>
+          <Typography className={classes.footerText}>Inspired by <a href="https://neal.fun/spend/">Spend Bill Gates' Money</a></Typography>
+          <Typography className={classes.footerText}>
+            由<a href="https://liust.me">@LiuST</a>自豪地制作 &nbsp;
               <a href="https://github.com/liust97/spend-money/issues">反馈</a> &nbsp;
               <a href="mailto:liust97@qq.com">邮箱联系</a>
-              </Typography>
-          </Container>
-        </footer>
+          </Typography>
+        </Container>
+      </footer>
       </ThemeProvider>
-    </div>
+    </div >
   );
 }
 
