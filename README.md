@@ -1,6 +1,6 @@
-# 马云模拟器
+# 有钱人模拟器
 
-试试花光马云的钱
+试试花光有钱人的钱
 
 React.js + Material UI + Github pages
 
