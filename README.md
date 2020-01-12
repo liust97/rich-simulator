@@ -4,7 +4,7 @@
 
 有钱人模拟器是一个使用React制作的模拟网上商城应用，使用Material UI作为UI框架。用户可以模拟拥有给定数目的金钱，可以在商城中购买商品，可以将钱存入理财应用中获取收益。
 
-[Demo](lemonjing.com/rich) （该Demo有更新，会与当前repo的内容略有不同。）
+[Demo](https://lemonjing.com/rich) （该Demo有更新，会与当前repo的内容略有不同。）
 
 欢迎Star。
 
