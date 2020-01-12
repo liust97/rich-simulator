@@ -42,7 +42,7 @@ npm start
 
 ## 如何修改初始金额和余额宝利率
 
-修改`src/container/RichSimulator`的constructor的` this.money`和` this.yuebaorate`
+修改`src/container/RichSimulator`的constructor的`this.money`和`this.yuebaorate`
 
 ## 如何修改外观
 
