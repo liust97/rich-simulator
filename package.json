@@ -1,8 +1,8 @@
 {
-  "name": "spend-money",
+  "name": "rich-simulator",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://lemonjing.com",
+  "homepage": "",
   "dependencies": {
     "@material-ui/core": "^4.6.1",
     "react": "^16.11.0",
@@ -13,9 +13,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build && COPY \"CNAME\" \"./build/CNAME\"",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
